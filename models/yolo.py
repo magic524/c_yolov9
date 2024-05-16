@@ -4,7 +4,8 @@ import platform
 import sys
 from copy import deepcopy
 from pathlib import Path
-from models.block.HCFNetblocks import PPA
+from models.block.HCANet import PPA
+
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[1]  # YOLO root directory
@@ -138,7 +139,7 @@ class DualDetect(nn.Module):
         self.nc = nc  # number of classes
         self.nl = len(ch) // 2  # number of detection layers
         self.reg_max = 16
-        self.no = nc + self.reg_max * 4  # number of outputs per anchor ##每个anchor的输出通道数
+        self.no = nc + self.reg_max * 4  # number of outputs per anchor
         self.inplace = inplace  # use inplace ops (e.g. slice assignment)
         self.stride = torch.zeros(self.nl)  # strides computed during build
 
@@ -721,8 +722,8 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
         LOGGER.info(f"{colorstr('activation:')} {act}")  # print
     na = (len(anchors[0]) // 2) if isinstance(anchors, list) else anchors  # number of anchors
     no = na * (nc + 5)  # number of outputs = anchors * (classes + 5)
-
-    layers, save, c2 = [], [], ch[-1]  # layers, savelist, ch out#################################################
+#####################################
+    layers, save, c2 = [], [], ch[-1]  # layers, savelist, ch out
     for i, (f, n, m, args) in enumerate(d['backbone'] + d['head']):  # from, number, module, args
         m = eval(m) if isinstance(m, str) else m  # eval strings
         for j, a in enumerate(args):
@@ -734,12 +735,11 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
             Conv, AConv, ConvTranspose, 
             Bottleneck, SPP, SPPF, DWConv, BottleneckCSP, nn.ConvTranspose2d, DWConvTranspose2d, SPPCSPC, ADown,
             RepNCSPELAN4, SPPELAN,PPA
- 
             }:
             c1, c2 = ch[f], args[0]
             if c2 != no:  # if not output
-                c2 = make_divisible(c2 * gw, 8)########################################33
-
+                c2 = make_divisible(c2 * gw, 8)
+#################################
             args = [c1, c2, *args[1:]]
             if m in {BottleneckCSP, SPPCSPC}:
                 args.insert(2, n)  # number of repeats

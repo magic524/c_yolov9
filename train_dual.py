@@ -440,7 +440,7 @@ def parse_opt(known=False):
     # parser.add_argument('--weights', type=str, default=ROOT / 'yolo.pt', help='initial weights path')
     # parser.add_argument('--cfg', type=str, default='', help='model.yaml path')
     parser.add_argument('--weights', type=str, default='/root/yolov9_PPA/yolov9-c-converted.pt', help='initial weights path')
-    parser.add_argument('--cfg', type=str, default='/root/yolov9_PPA/models/detect/yolov9-c-PPA-neck.yaml', help='model.yaml path')
+    parser.add_argument('--cfg', type=str, default='/root/yolov9_PPA/models/detect/yolov9-c-PPA.yaml', help='model.yaml path')
     parser.add_argument('--data', type=str, default=ROOT / '/root/orYOLOv9/yolov9-main/data/VisDrone.yaml', help='dataset.yaml path')
     parser.add_argument('--hyp', type=str, default=ROOT / '/root/yolov9_PPA/data/hyps/hyp.scratch-high.yaml', help='hyperparameters path')
     parser.add_argument('--epochs', type=int, default=20, help='total training epochs')
